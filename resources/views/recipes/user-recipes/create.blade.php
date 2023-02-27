@@ -1,25 +1,32 @@
-
-<x-app-layout>
+@extends('recipes.user-recipes/master')
+@section('content')
 <div class="max-w-7xl mx-auto mt-8 pb-8 break-all" style="width: 100%; height:100vh;">
     <form method="post" action="{{ route('recipes.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="grid gap-6 mb-6 md:grid-cols-2">
+
+            {{-- Name input --}}
             <div>
-                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Recipe name</label>
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white dark:w-full">Recipe name</label>
                 <input type="text" id="name" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Recipe name" required>
             </div>
+
+            {{-- Category select --}}
             <div>
                 <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
                 <select id="category" name="category_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected>Choose a category</option>
-                @foreach ($category as $value)
-                <option value="{{$value->id}}" required>{{$value->name}}</option>
-                @endforeach
+                    <option selected>Choose a category</option>
+                    @foreach ($category as $value)
+                        <option value="{{$value->id}}" required>{{$value->name}}</option>
+                    @endforeach
                 </select>
             </div>
+
         </div>
+
+        {{-- Description textarea  --}}
         <div class="mb-6">
-            <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+            <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-200 dark:bg-gray-700 dark:border-gray-600">
                 <div class="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
                     <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
                         <div class="flex flex-wrap items-center space-x-1 sm:pl-4">
@@ -52,8 +59,10 @@
                 </div>
             </div>
         </div>
+
+        {{-- Instructions textarea  --}}
         <div class="mb-6">
-            <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+            <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-200 dark:bg-gray-700 dark:border-gray-600">
                 <div class="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
                     <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
                         <div class="flex flex-wrap items-center space-x-1 sm:pl-4">
@@ -85,14 +94,26 @@
                     <textarea name="instructions" id="instructions" rows="8" class="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Instructions..." required></textarea>
                 </div>
             </div>
-            <div class="mb-6">
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
-                <input name="img" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
+        </div>
+
+        {{-- File input --}}
+        <div class="mb-6">
+            <div class="flex items-center justify-center w-full">
+                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                    </div>
+                    <input id="dropzone-file" name="img" type="file" class="hidden" />
+                </label>
             </div>
         </div>
+
+        {{-- Ingredients dropdown --}}
         <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div>
-                <button id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="button">Choose recipes ingredients</button>
+                <button id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="button">Choose recipes ingredients</button>
                 <div id="dropdownSearch" class="z-10 hidden bg-white rounded-lg shadow dark:bg-gray-700" style="width: 620px;">
                     <div class="p-3">
                     <label for="input-group-search" class="sr-only">Search</label>
@@ -117,12 +138,14 @@
                     </ul>
                 </div>
             </div>
+
+            {{-- submit input --}}
             <div>
-                <input type="submit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-blue-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Category" required>
+                <input type="submit" class="bg-gray-900 border border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-blue-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Category" required>
             </div>
+
         </div>
     </form>
 </div>
-
-</x-app-layout>
+@endsection('content')
 

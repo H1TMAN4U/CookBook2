@@ -1,5 +1,7 @@
 <x-app-layout>
-    <section class="overflow-hidden text-gray-700">
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/dark-light-mode.js'])
+
+    <section class="intro overflow-hidden text-gray-700">
         <div class="container px-5 py-2 mx-auto lg:pt-24 lg:px-32">
           <div class="flex flex-wrap -m-1 md:-m-2">
             <div class="flex flex-wrap w-1/2">
@@ -56,6 +58,4 @@
             </a>
         </div>
     </section>
-
-
 </x-app-layout>

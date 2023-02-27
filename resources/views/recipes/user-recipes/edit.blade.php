@@ -1,82 +1,19 @@
 @extends('recipes.user-recipes/master')
 @section('content')
-<div class="flex justify-center items-center my-8">
-    <div href="#" class="block max-w-2xl p-6 bg-white border border-gray-200 rounded-lg shadow-md ">
-		<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">Lorem, ipsum dolor sit amet consectetur adipisicing.</h5>
-        <p class="font-normal text-gray-700 py-2">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Rerum ducimus natus magnam, minus et doloremque.</p>
-		<form method="post" action="{{ route('recipes.update', $recipe->id) }}" enctype="multipart/form-data">
-			@csrf
-			@method('PUT')
-			<div class="row mb-3">
-				<div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 ">
-					<div class="flex items-center justify-between px-3 py-2 border-b">
-						<label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Name</label>
-					</div>
-					<div class="px-2 py-0.5 bg-white rounded-b-lg ">
-						<input type="text" name="name" value="{{ $recipe->name }}" class="bg-white-50 border-0 text-gray-900 text-sm rounded-b-lg block w-full  "
-						placeholder="name" required>
-					</div>
-				</div>
-			</div>
-			<div class="row mb-3">
-				<div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 ">
-					<div class="flex items-center justify-between px-3 py-2 border-b">
-						<label for="descriptions" class="block mb-2 text-sm font-medium text-gray-900 ">Description</label>
-					</div>
-					<div class="px-2 py-2 bg-white rounded-b-lg ">
-						<textarea type="text" name="descriptions"  rows="8" class="block w-full px-0 text-sm rounded-b-lg
-						 text-gray-800 bg-white border-0"  required>{{ $recipe->descriptions }}</textarea>
-					</div>
-				</div>
-			</div>
-			<div class="row mb-3">
-				<div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 ">
-					<div class="flex items-center justify-between px-3 py-2 border-b">
-						<label for="description" class="block mb-2 text-sm font-medium text-gray-900 ">instructions</label>
-					</div>
-					<div class="px-2 py-2 bg-white rounded-b-lg ">
-						<textarea type="text" name="instructions" rows="8" class="block w-full px-0 text-sm rounded-b-lg
-						 text-gray-800 bg-white border-0" required>{{ $recipe->instructions }}</textarea>
-					</div>
-				</div>
-			</div>
-			<div class="relative z-0 mb-6 w-full group">
-				<select id="category_id" name="category_id" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
-				 border-gray-300 appearance-none  dark:border-gray-600  focus:outline-none focus:ring-0 focus:border-blue-600 peer">
-                 @foreach ($category as $value)
-					<option value="{{$value->id}}">{{$value->name}}</option>
-					@endforeach
-				</select>
-			</div>
-			<div class="row mb-4">
-				<div class="col-sm-10">
-					<input type="file" name = "img" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg
-					 cursor-pointer bg-gray-50 hover:bg-white " id="multiple_files" required>
-					<input type="hidden" name="hidden_img" value="{{ $recipe->img }}" />
-				</div>
-			</div>
-			<div class="text-center">
-				<input type="hidden" name="hidden_id" value="{{ $recipe->id }}" />
-				<input type="submit" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer
-				 bg-gray-50 p-2 hover:bg-white " value="Edit" />
-			</div>
-		</form>
-	</div>
-</div>
-@endsection('content')
-
-
-<x-app-layout>
 <div class="max-w-7xl mx-auto mt-8 pb-8 break-all" style="width: 100%; height:100vh;">
     <form method="post" action="{{ route('recipes.update', $recipe->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="grid gap-6 mb-6 md:grid-cols-2">
+
+
+            {{-- Name input --}}
             <div>
                 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Recipe name</label>
                 <input type="text" id="name" name="name" value="{{ $recipe->name }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Recipe name" required>
             </div>
+
+            {{-- Category select --}}
             <div>
                 <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
                 <select id="category" name="category_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -85,7 +22,10 @@
                 @endforeach
                 </select>
             </div>
+
         </div>
+
+        {{-- Description textarea  --}}
         <div class="mb-6">
             <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
                 <div class="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
@@ -120,6 +60,8 @@
                 </div>
             </div>
         </div>
+
+        {{-- Instructions textarea  --}}
         <div class="mb-6">
             <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
                 <div class="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
@@ -153,12 +95,16 @@
                     <textarea name="instructions" id="instructions" rows="8" class="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Instructions..." required>{{ $recipe->instructions }}</textarea>
                 </div>
             </div>
-            <div class="mb-6">
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input"></label>
-                <input value="{{ $recipe->img }}" name="img" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
-                <input type="hidden" name="hidden_img" value="{{ $recipe->img }}" />
-            </div>
         </div>
+
+        {{-- File input --}}
+        <div class="mb-6">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input"></label>
+            <input value="{{ $recipe->img }}" name="img" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
+            <input type="hidden" name="hidden_img" value="{{ $recipe->img }}" />
+        </div>
+
+        {{-- Ingredients dropdown --}}
         <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div>
                 <button id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="button">Choose recipes ingredients</button>
@@ -186,13 +132,17 @@
                     </ul>
                 </div>
             </div>
+
+            {{-- submit input --}}
             <div>
                 <input type="hidden" name="hidden_id" value="{{ $recipe->id }}" />
                 <input type="submit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-blue-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Category" required>
             </div>
+            
         </div>
     </form>
 </div>
+@endsection('content')
 
-</x-app-layout>
+
 

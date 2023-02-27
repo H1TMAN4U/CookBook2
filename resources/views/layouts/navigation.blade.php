@@ -21,9 +21,9 @@
                     </x-nav-link>
                 </div>
             </div>
-
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+                <x-button-dark-mode></x-button-dark-mode>
                 @auth
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -78,6 +78,7 @@
                         <a href="{{ route('register') }}" class="ml-4 text-sm font-medium text-gray-400 hover:text-gray-400 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
                     @endif
                 </div>
+
                 @endauth
             {{-- </div> --}}
             @endif

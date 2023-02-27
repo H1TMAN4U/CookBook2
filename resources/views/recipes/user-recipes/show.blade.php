@@ -1,4 +1,5 @@
-<x-app-layout>
+@extends('recipes.user-recipes/master')
+@section('content')
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pb-8 break-all" style="width: 100%; height:100vh;">
         <div class="grid grid-cols-2 flex w-full rounded-t-lg dark:bg-gray-800" style="height:55vh">
             <div class="m-8">
@@ -36,6 +37,6 @@
             </div>
         </div>
     </main>
-</x-app-layout>
+@endsection('content')
 
 
